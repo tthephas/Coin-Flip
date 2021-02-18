@@ -1,0 +1,102 @@
+# write a function  is_between(x, y, z) that returns True if x<= y <= z and false otherwise
+
+
+
+def is_between(x, y, z):
+  if (y >= x) and (y <= z):
+    return True
+  else:
+    return False
+
+
+
+is_between(2,5, 4)
+
+is_between(1,7,10)
+
+is_between(2,3,4)
+
+is_between(5,4,3)
+
+# Write a function that takes a number as an argument, which is the number of coin flips. Then return, the number of heads, the number of tails. 
+# then return the number of heads IN A ROW, how many consecutive heads happened. same with tails. 
+
+
+from random import randint
+from itertools import groupby
+
+flip_list = []
+
+for i in range(25):
+  flip = randint(0, 1)
+  if flip == 0:
+      flip_list.append('H')
+  else:
+      flip_list.append('T')
+  
+ 
+print(flip_list)
+heads_count = flip_list.count('H')
+tails_count = flip_list.count('T')
+print(f'Heads: {heads_count}')
+print(f'Tails: {tails_count}')
+
+grouped_list = [[k,len(list(v))] for k,v in groupby(flip_list)]
+#max_list = max(grouped_list)
+#print(max_list)
+print(sorted(grouped_list, reverse=True))
+
+idx = 0
+h = []
+t = []
+y = sorted(grouped_list, reverse=True)
+for x in y:
+  if ('T' in y[idx]) and (len(t)== 0):
+    t.append(y[idx])
+    idx +=1
+  elif ('H' in y[idx]) and (len(h)== 0):
+    h.append(y[idx])
+  else:
+    idx +=1 
+    continue
+    
+
+print(h)
+print(t)
+
+from random import randint
+from itertools import groupby
+
+def flip_some_coins(flips):
+  flip_list = []                         #empty list just to store the results one by one
+  for i in range(flips):                 #flip a coin, heads or tails, as many as user enters
+    flip = randint(0, 1)
+    if flip == 0:
+        flip_list.append('H')            #append to the list of results
+    else:
+        flip_list.append('T')
+  #print(flip_list)
+  heads_count = flip_list.count('H')     #count the total 
+  tails_count = flip_list.count('T')
+  print(f'Heads: {heads_count}')
+  print(f'Tails: {tails_count}')
+  grouped_list = [[k,len(list(v))] for k,v in groupby(flip_list)]   #found on google. Allowed me to iterate thru and group by heads and tails
+  idx = 0
+  h = []                                  # empty list to put the highest number in for each heads and tails
+  t = []
+  y = sorted(grouped_list, reverse=True)  # sorting made it easier to grab the highest
+  for x in y:
+    if ('T' in y[idx]) and (len(t)== 0):  # if its T, put in list. First one is highest b/c of the reverse sort
+      t.append(y[idx])
+      idx +=1
+    elif ('H' in y[idx]) and (len(h)== 0):
+      h.append(y[idx])
+    else:
+      idx +=1 
+      continue
+  print(f'Longest streak of Heads: {h[0][1]}')
+  print(f'Longest streak of Tails: {t[0][1]}')
+
+flip_some_coins(1000)
+
+
